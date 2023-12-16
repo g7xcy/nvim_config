@@ -24,7 +24,7 @@ require("lazy").setup({
   build = ":TSUpdate",
   config = function () 
   local configs = require("nvim-treesitter.configs")
-  configs.setup({
+    configs.setup({
     ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "cpp", "go", "javascript", "html", "python" },
     sync_install = false,
     highlight = { enable = true },
@@ -44,6 +44,16 @@ require("lazy").setup({
 {
   'neoclide/coc.nvim',
   branch = 'release'
+},
+{ 
+  "kyazdani42/nvim-tree.lua",
+  event = "VimEnter",
+  dependencies = "nvim-tree/nvim-web-devicons",
+},
+{
+  'akinsho/bufferline.nvim',
+  version = "*",
+  dependencies = 'nvim-tree/nvim-web-devicons'
 }
 })
 
@@ -58,7 +68,6 @@ local highlight = {
     "RainbowViolet",
     "RainbowCyan",
 }
-
 local hooks = require "ibl.hooks"
 -- create the highlight groups in the highlight setup hook, so they are reset
 -- every time the colorscheme changes
@@ -114,3 +123,56 @@ require('lualine').setup {
   inactive_winbar = {},
   extensions = {}
 }
+
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+
+
+-- setup nvim-tree with some options
+require("nvim-tree").setup({
+  sort = {
+    sorter = "case_sensitive",
+  },
+  git = {
+    enable = true,
+  },
+  view = {
+    side = "left",
+    number = false,
+    relativenumber = false,
+    -- signcolumn = "yes",
+    width = 30,
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = false,
+  },
+})
+
+require("bufferline").setup({
+  options = {
+    close_command = "bdelete! %d",       -- 点击关闭按钮关闭
+    right_mouse_command = "bdelete! %d", -- 右键点击关闭
+    indicator = {
+      icon = '▎', -- 分割线
+      style = 'underline',
+    },
+    buffer_close_icon = '󰅖',
+    modified_icon = '●',
+    close_icon = '',
+    offsets = {
+      {
+        filetype = "NvimTree",
+        text = "File Explorer",
+        text_align = "left",
+        separator = true,
+      },
+    },
+  },
+})

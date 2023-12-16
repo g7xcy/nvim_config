@@ -127,3 +127,9 @@ function _G.show_docs()
     end
 end
 keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', {silent = true})
+
+-- ctrl+f: file tab
+keyset("n", "<C-f>", ":NvimTreeToggle<CR>", opt)
+-- ctrl+h/l: switch tab
+keyset("n", "<C-h>", ":BufferLineCyclePrev<CR>", opt)
+keyset("n", "<C-l>", ":BufferLineCycleNext<CR>", opt)
